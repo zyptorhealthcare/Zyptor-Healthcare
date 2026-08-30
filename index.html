@@ -28,26 +28,24 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Product",
-  "name": "Zyptor Lumbo Sacral Support Belt",
-  "image": [
-    "https://www.zyptorhealthcare.in/model-male.png",
-    "https://www.zyptorhealthcare.in/model-female.png",
-    "https://www.zyptorhealthcare.in/belt-front.png"
-  ],
-  "description": "Firm, adjustable lumbar and sacral support belt for everyday lower-back and posture support.",
-  "brand": {
-    "@type": "Brand",
-    "name": "Zyptor Healthcare"
-  },
-  "sku": "LS-BELT",
-  "offers": {
-    "@type": "Offer",
-    "url": "https://www.zyptorhealthcare.in/#shop",
-    "priceCurrency": "INR",
-    "price": "899",
-    "availability": "https://schema.org/InStock"
-  }
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://www.zyptorhealthcare.in/#organization",
+      "name": "Zyptor Healthcare",
+      "url": "https://www.zyptorhealthcare.in/",
+      "logo": "https://www.zyptorhealthcare.in/logo-transparent.png"
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://www.zyptorhealthcare.in/#website",
+      "url": "https://www.zyptorhealthcare.in/",
+      "name": "Zyptor Healthcare",
+      "publisher": {
+        "@id": "https://www.zyptorhealthcare.in/#organization"
+      }
+    }
+  ]
 }
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
