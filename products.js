@@ -34,8 +34,8 @@ const ZYPTOR_PRODUCTS = [
     price: "₹899",
     priceINR: 899,
     compareAtPrice: "₹1,499",
-    image: "images/model-male.png",
-    gallery: ["images/model-male.png", "images/model-female.png", "images/belt-3quarter.png", "images/belt-front.png", "images/infographic-benefits.jpg", "images/infographic-features.jpg"],
+    image: "./model-male.png",
+    gallery: ["./model-male.png", "./model-female.png", "./belt-3quarter.png", "./belt-front.png", "./infographic-benefits.jpg", "images/infographic-features.jpg"],
     imageAlt: "Model wearing the Zyptor Lumbo Sacral Support Belt, back view",
     badge: "Bestseller",
     description:
