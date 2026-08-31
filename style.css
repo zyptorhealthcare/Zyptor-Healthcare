@@ -1034,4 +1034,27 @@ footer a:hover { color: var(--red); }
     top: 14px;
     left: 14px;
   }
+}/* PREMIUM ZYPTOR BELT ANIMATION */
+.hero-visual-chip {
+  animation: zyptorBeltFloat 4.5s ease-in-out infinite;
+  transform-origin: center;
+  will-change: transform;
+}
+
+.hero-visual-chip img {
+  transition: transform 0.5s ease;
+}
+
+.hero-visual-chip:hover img {
+  transform: scale(1.08) rotate(-2deg);
+}
+
+@keyframes zyptorBeltFloat {
+  0%, 100% {
+    transform: translateY(0) rotate(-1deg);
+  }
+
+  50% {
+    transform: translateY(-16px) rotate(2deg);
+  }
 }
