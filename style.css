@@ -1060,3 +1060,62 @@ footer a:hover { color: var(--red); }
     transform: translateY(-16px) rotate(2deg);
   }
 }
+
+/* PRODUCT DISCOUNT */
+.price-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.discount-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 12px;
+  border: 1.5px solid var(--red);
+  border-radius: 4px;
+  color: var(--red);
+  background: #fff;
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.savings-box {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  max-width: 430px;
+  background: #f0f8f0;
+  color: #178627;
+  padding: 11px 14px;
+  border-radius: 5px;
+  margin-bottom: 28px;
+  font-size: 14px;
+}
+
+.savings-box strong {
+  color: #07851d;
+  font-weight: 700;
+}
+
+.savings-icon {
+  font-size: 20px;
+  color: #07851d;
+}
+
+@media (max-width: 640px) {
+  .discount-badge {
+    font-size: 13px;
+    padding: 6px 9px;
+  }
+
+  .savings-box {
+    width: 100%;
+  }
+}
