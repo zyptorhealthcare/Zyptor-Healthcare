@@ -30,7 +30,7 @@ const ZYPTOR_PRODUCTS = [
   {
     id: "ls-belt",
     name: "Zyptor Lumbo Sacral Support Belt",
-    tagline: "Ideal support for waist & back",
+   tagline: "Comfortable support for your waist & lower back",
     price: "₹899",
     priceINR: 899,
     compareAtPrice: "₹1,499",
@@ -39,11 +39,11 @@ const ZYPTOR_PRODUCTS = [
     imageAlt: "Model wearing the Zyptor Lumbo Sacral Support Belt, back view",
     badge: "Bestseller",
     description:
-      "Firm, adjustable compression across the lumbar and sacral region — built to calm lower-back pain and take pressure off the sciatic nerve root, so you can sit, stand and move through your day without bracing against it.",
+    "Firm, adjustable support across the lower-back region, designed for everyday comfort and stability while sitting, standing, working or staying active.",
     features: [
-      "Provides strong support to the lower back and lumbar region",
+      "Provides firm support to the lower back and lumbar region",
       "Helps relieve back pain, muscle strain and sprain",
-      "Improves posture and body alignment",
+    "Helps support better posture and body alignment",
       "Breathable, perforated panel for all-day comfort",
       "Double-lock adjustable straps for a customised fit",
       "Built for long hours of sitting or standing"
