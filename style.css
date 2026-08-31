@@ -282,7 +282,6 @@ p { color: var(--ink-soft); }
     background .45s var(--ease);
 
   will-change: transform;
-};
 }
 .hero-visual-chip img {
   width: 100%;
