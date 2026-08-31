@@ -1034,7 +1034,9 @@ footer a:hover { color: var(--red); }
     top: 14px;
     left: 14px;
   }
-}/* PREMIUM ZYPTOR BELT ANIMATION */
+}
+
+/* PREMIUM ZYPTOR BELT ANIMATION */
 .hero-visual-chip {
   animation: zyptorBeltFloat 4.5s ease-in-out infinite;
   transform-origin: center;
