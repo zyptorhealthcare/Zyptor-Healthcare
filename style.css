@@ -1061,61 +1061,153 @@ footer a:hover { color: var(--red); }
   }
 }
 
-/* PRODUCT DISCOUNT */
+/* ============================================================
+   PREMIUM PRODUCT PRICE / DISCOUNT
+   ============================================================ */
+
 .price-row {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 18px;
   flex-wrap: wrap;
-  margin-bottom: 12px;
+  margin-top: 30px;
+  margin-bottom: 20px;
 }
 
+.price-now {
+  font-family: var(--font-display);
+  font-size: 42px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--ink);
+}
+
+.price-was {
+  font-size: 17px;
+  color: var(--slate);
+  text-decoration: line-through;
+  text-decoration-thickness: 1.5px;
+}
+
+
+/* RED 40% OFF TAG */
 .discount-badge {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 7px 12px;
-  border: 1.5px solid var(--red);
-  border-radius: 4px;
-  color: var(--red);
+
+  padding: 9px 15px;
+
   background: #fff;
+  color: var(--red);
+
+  border: 2px solid var(--red);
+  border-radius: 5px;
+
   font-family: var(--font-display);
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 600;
-  letter-spacing: 0.02em;
+  line-height: 1;
+
   white-space: nowrap;
 }
 
+
+/* small tag notch */
+.discount-badge::before {
+  content: "";
+  position: absolute;
+
+  left: -8px;
+  top: 50%;
+
+  width: 14px;
+  height: 14px;
+
+  background: #fff;
+
+  border-left: 2px solid var(--red);
+  border-bottom: 2px solid var(--red);
+
+  transform:
+    translateY(-50%)
+    rotate(45deg);
+}
+
+
+/* GREEN SAVINGS BOX */
 .savings-box {
   display: flex;
   align-items: center;
-  gap: 9px;
-  max-width: 430px;
-  background: #f0f8f0;
-  color: #178627;
-  padding: 11px 14px;
-  border-radius: 5px;
-  margin-bottom: 28px;
-  font-size: 14px;
+  gap: 11px;
+
+  width: fit-content;
+  min-width: 330px;
+
+  padding: 12px 18px;
+
+  margin-top: 0;
+  margin-bottom: 30px;
+
+  background: linear-gradient(
+    90deg,
+    #f0f8f0,
+    #f5faf5
+  );
+
+  color: #158326;
+
+  border-radius: 6px;
+
+  font-size: 16px;
+  font-weight: 500;
 }
 
 .savings-box strong {
-  color: #07851d;
+  color: #087b19;
   font-weight: 700;
 }
 
-.savings-icon {
-  font-size: 20px;
-  color: #07851d;
+.saving-tag-icon {
+  color: #118626;
+  font-size: 22px;
+  line-height: 1;
 }
 
+
+/* MOBILE */
 @media (max-width: 640px) {
+
+  .price-row {
+    gap: 11px;
+    margin-top: 22px;
+    margin-bottom: 16px;
+  }
+
+  .price-now {
+    font-size: 34px;
+  }
+
+  .price-was {
+    font-size: 14px;
+  }
+
   .discount-badge {
-    font-size: 13px;
-    padding: 6px 9px;
+    font-size: 14px;
+    padding: 7px 10px;
+  }
+
+  .discount-badge::before {
+    width: 10px;
+    height: 10px;
+    left: -6px;
   }
 
   .savings-box {
+    min-width: 0;
     width: 100%;
+    padding: 11px 14px;
+    font-size: 14px;
   }
 }
