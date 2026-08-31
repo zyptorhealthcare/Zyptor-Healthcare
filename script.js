@@ -15,6 +15,15 @@ function renderProducts() {
 
   list.innerHTML = ZYPTOR_PRODUCTS.map((p, i) => {
     const gallery = p.gallery && p.gallery.length ? p.gallery : [p.image];
+    const mrp = p.compareAtPrice
+  ? Number(p.compareAtPrice.replace(/[^\d]/g, ""))
+  : 0;
+
+const savings = mrp > p.priceINR ? mrp - p.priceINR : 0;
+
+const discountPercent = mrp > p.priceINR
+  ? Math.round((savings / mrp) * 100)
+  : 0;
     return `
     <article class="product-card reveal">
       <div class="product-media" data-carousel data-index="${i}">
@@ -50,10 +59,24 @@ function renderProducts() {
         <p class="tagline">${p.tagline || ""}</p>
         <h3>${p.name}</h3>
         <p class="desc">${p.description}</p>
-        <div class="price-row">
-          <span class="price-now">${p.price}</span>
-          ${p.compareAtPrice ? `<span class="price-was">MRP ${p.compareAtPrice}</span>` : ""}
-        </div>
+      <div class="price-row">
+  <span class="price-now">${p.price}</span>
+
+  ${p.compareAtPrice
+    ? `<span class="price-was">MRP ${p.compareAtPrice}</span>`
+    : ""}
+
+  ${discountPercent > 0
+    ? `<span class="discount-badge">${discountPercent}% OFF</span>`
+    : ""}
+</div>
+
+${savings > 0
+  ? `<div class="savings-box">
+       <span class="savings-icon">◇</span>
+       <span>You save <strong>₹${savings.toLocaleString("en-IN")} (${discountPercent}%)</strong></span>
+     </div>`
+  : ""}
         <ul class="feature-list">
           ${p.features.map((f) => `<li>${CHECK_SVG}<span>${f}</span></li>`).join("")}
         </ul>
