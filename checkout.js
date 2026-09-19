@@ -29,7 +29,7 @@ async function startCheckout(product) {
 
     // 2. Open Razorpay Checkout
     const options = {
-      key: "YOUR_RAZORPAY_KEY_ID",
+      key: "rzp_test_TdksKpZAARyXYC",
       amount: data.order.amount,
       currency: data.order.currency,
       name: "Zyptor Healthcare",
