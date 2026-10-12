@@ -1,68 +1,165 @@
-// ZYPTOR HEALTHCARE - RAZORPAY CHECKOUT
 
-async function startCheckout(product) {
-  try {
-    const amountInRupees = Number(product.price || 899);
+/* ZYPTOR HEALTHCARE - DELIVERY + RAZORPAY TEST CHECKOUT */
 
-    // 1. Create secure Razorpay order from our Vercel backend
-    const response = await fetch("/api/create-order", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        amount: amountInRupees * 100,
-        receipt: `zyptor_${Date.now()}`,
-        notes: {
-          product: product.name || "Zyptor Lumbo Sacral Support Belt"
-        }
-      })
-    });
+const ZYPTOR_TEST_KEY = "rzp_test_TdksKpZAARyXYC";
 
-    const data = await response.json();
+function getDeliveryDetails() {
+  return {
+    name: document.getElementById("customer-name").value.trim(),
+    phone: document.getElementById("customer-phone").value.trim(),
+    email: document.getElementById("customer-email").value.trim(),
+    address: document.getElementById("customer-address").value.trim(),
+    city: document.getElementById("customer-city").value.trim(),
+    state: document.getElementById("customer-state").value.trim(),
+    pincode: document.getElementById("customer-pincode").value.trim(),
+    size: document.getElementById("customer-size").value
+  };
+}
 
-    if (!response.ok || !data.order) {
-      console.error(data);
-      alert("Unable to start payment. Please try again.");
+document.getElementById("delivery-form")?.addEventListener(
+  "submit",
+  async function (event) {
+    event.preventDefault();
+
+    const customer = getDeliveryDetails();
+
+    if (!/^[0-9]{10}$/.test(customer.phone)) {
+      alert("Please enter a valid 10-digit phone number.");
       return;
     }
 
-    // 2. Open Razorpay Checkout
-    const options = {
-      key: "rzp_test_TdksKpZAARyXYC",
-      amount: data.order.amount,
-      currency: data.order.currency,
-      name: "Zyptor Healthcare",
-      description:
-        product.name || "Zyptor Lumbo Sacral Support Belt",
-      order_id: data.order.id,
+    if (!/^[0-9]{6}$/.test(customer.pincode)) {
+      alert("Please enter a valid 6-digit pincode.");
+      return;
+    }
 
-      handler: function (response) {
-        console.log("Payment successful:", response);
+    if (!selectedCheckoutProduct) {
+      alert("Please select a product first.");
+      return;
+    }
 
-        alert(
-          "Payment successful! Thank you for ordering from Zyptor Healthcare."
-        );
-      },
+    const payButton = this.querySelector(
+      'button[type="submit"]'
+    );
 
-      theme: {
-        color: "#e50914"
+    payButton.disabled = true;
+    payButton.textContent = "Preparing secure payment...";
+
+    try {
+      const orderResponse = await fetch("/api/create-order", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          productId: selectedCheckoutProduct.id,
+          size: customer.size
+        })
+      });
+
+      const orderData = await orderResponse.json();
+
+      if (!orderResponse.ok || !orderData.order) {
+        throw new Error("Unable to create payment order");
       }
-    };
 
-    const razorpay = new Razorpay(options);
+      if (typeof Razorpay !== "function") {
+        throw new Error("Razorpay checkout is unavailable");
+      }
 
-    razorpay.on("payment.failed", function (response) {
-      console.error("Payment failed:", response.error);
-      alert(
-        "Payment failed. No worries — please try again."
-      );
-    });
+      const options = {
+        key: ZYPTOR_TEST_KEY,
+        amount: orderData.order.amount,
+        currency: "INR",
+        name: "Zyptor Healthcare",
+        description: selectedCheckoutProduct.name,
+        order_id: orderData.order.id,
 
-    razorpay.open();
+        prefill: {
+          name: customer.name,
+          email: customer.email,
+          contact: customer.phone
+        },
 
-  } catch (error) {
-    console.error("Checkout error:", error);
-    alert("Something went wrong while starting payment.");
+        theme: {
+          color: "#c8102e"
+        },
+
+        handler: async function (payment) {
+          try {
+            const verifyResponse = await fetch(
+              "/api/verify-payment",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                  razorpay_order_id: payment.razorpay_order_id,
+                  razorpay_payment_id: payment.razorpay_payment_id,
+                  razorpay_signature: payment.razorpay_signature
+                })
+              }
+            );
+
+            const verification = await verifyResponse.json();
+
+            if (!verifyResponse.ok || !verification.success) {
+              throw new Error("Payment verification failed");
+            }
+
+            alert(
+              "Test payment verified successfully! " +
+              "No shipment has been created."
+            );
+
+            document.getElementById("delivery-modal")
+              ?.classList.remove("is-open");
+
+            document.body.style.overflow = "";
+
+          } catch (error) {
+            console.error("Verification error:", error);
+
+            alert(
+              "Payment status needs confirmation. " +
+              "Please contact support before trying again."
+            );
+          }
+        },
+
+        modal: {
+          ondismiss: function () {
+            payButton.disabled = false;
+            payButton.textContent =
+              "Continue to Secure Payment →";
+          }
+        }
+      };
+
+      const razorpay = new Razorpay(options);
+
+      razorpay.on("payment.failed", function (response) {
+        console.error("Payment failed:", response.error);
+
+        payButton.disabled = false;
+        payButton.textContent =
+          "Continue to Secure Payment →";
+
+        alert("Test payment failed. Please try again.");
+      });
+
+      razorpay.open();
+
+    } catch (error) {
+      console.error("Checkout error:", error);
+
+      alert("Unable to start payment. Please try again.");
+
+    } finally {
+      payButton.disabled = false;
+      payButton.textContent =
+        "Continue to Secure Payment →";
+    }
   }
-}
+);
