@@ -229,3 +229,59 @@ function init() {
 // time this file runs — DOMContentLoaded has already fired. Run init()
 // immediately instead of waiting for an event that's already passed.
 init();
+
+/* ZYPTOR - OPEN DELIVERY CHECKOUT */
+
+let selectedCheckoutProduct = null;
+
+document.addEventListener("click", function (event) {
+  const buyButton = event.target.closest("[data-buy-now]");
+  if (!buyButton) return;
+
+  const productId = buyButton.getAttribute("data-buy-now");
+
+  const product = ZYPTOR_PRODUCTS.find(
+    (item) => String(item.id) === String(productId)
+  );
+
+  if (!product) {
+    alert("Product not found.");
+    return;
+  }
+
+  selectedCheckoutProduct = product;
+
+  const modal = document.getElementById("delivery-modal");
+  if (!modal) {
+    alert("Delivery form is unavailable.");
+    return;
+  }
+
+  document.getElementById("delivery-product-name").textContent =
+    product.name;
+
+  document.getElementById("delivery-total").textContent =
+    product.price;
+
+  modal.classList.add("is-open");
+  document.body.style.overflow = "hidden";
+});
+
+document.addEventListener("click", function (event) {
+  if (!event.target.closest("[data-close-delivery]")) return;
+
+  const modal = document.getElementById("delivery-modal");
+  if (modal) modal.classList.remove("is-open");
+
+  document.body.style.overflow = "";
+});
+
+document.addEventListener("keydown", function (event) {
+  if (event.key !== "Escape") return;
+
+  const modal = document.getElementById("delivery-modal");
+  if (modal) modal.classList.remove("is-open");
+
+  document.body.style.overflow = "";
+});
+
