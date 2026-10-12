@@ -1,7 +1,7 @@
+
 const Razorpay = require("razorpay");
 
 module.exports = async (req, res) => {
-  // Only allow POST requests
   if (req.method !== "POST") {
     return res.status(405).json({
       error: "Method not allowed"
@@ -9,28 +9,27 @@ module.exports = async (req, res) => {
   }
 
   try {
-    const { amount, receipt, notes } = req.body || {};
-
-    // Validate amount
-    if (!amount || Number(amount) <= 0) {
-      return res.status(400).json({
-        error: "Valid amount is required"
+    if (!process.env.RAZORPAY_KEY_ID ||
+        !process.env.RAZORPAY_KEY_SECRET) {
+      return res.status(500).json({
+        error: "Payment configuration missing"
       });
     }
 
-    // Razorpay instance
     const razorpay = new Razorpay({
       key_id: process.env.RAZORPAY_KEY_ID,
       key_secret: process.env.RAZORPAY_KEY_SECRET
     });
 
-    // Create Razorpay order
+    // Fixed server-side price: Rs 899
+    const amount = 89900;
+
     const order = await razorpay.orders.create({
-      amount: Math.round(Number(amount)), // amount must be in paise
+      amount,
       currency: "INR",
-      receipt: receipt || `zyptor_${Date.now()}`,
-      notes: notes || {
-        brand: "Zyptor Healthcare"
+      receipt: `zyptor_${Date.now()}`,
+      notes: {
+        product: "Zyptor Lumbo Sacral Support Belt"
       }
     });
 
@@ -40,11 +39,10 @@ module.exports = async (req, res) => {
     });
 
   } catch (error) {
-    console.error("Razorpay order creation failed:", error);
-
+    console.error("Order creation failed:", error);
     return res.status(500).json({
       success: false,
-      error: "Unable to create Razorpay order"
+      error: "Unable to create payment order"
     });
   }
 };
