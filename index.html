@@ -421,7 +421,155 @@ fbq('track', 'PageView');
     </div>
   </div>
 </footer>
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<!-- ================= DELIVERY CHECKOUT ================= -->
+
+<div class="delivery-modal" id="delivery-modal">
+
+  <div class="delivery-overlay" data-close-delivery></div>
+
+  <div class="delivery-panel">
+
+    <button
+      class="delivery-close"
+      type="button"
+      data-close-delivery
+      aria-label="Close"
+    >
+      ×
+    </button>
+
+    <div class="delivery-header">
+      <p class="eyebrow">Secure Checkout</p>
+      <h2>Delivery Details</h2>
+      <p>
+        Enter your delivery information before continuing
+        to secure payment.
+      </p>
+    </div>
+
+    <form id="delivery-form">
+
+      <div class="delivery-grid">
+
+        <label class="delivery-field">
+          <span>Full Name *</span>
+          <input
+            type="text"
+            id="customer-name"
+            autocomplete="name"
+            required
+          >
+        </label>
+
+        <label class="delivery-field">
+          <span>Phone *</span>
+          <input
+            type="tel"
+            id="customer-phone"
+            inputmode="numeric"
+            autocomplete="tel"
+            maxlength="10"
+            required
+          >
+        </label>
+
+        <label class="delivery-field delivery-wide">
+          <span>Email</span>
+          <input
+            type="email"
+            id="customer-email"
+            autocomplete="email"
+          >
+        </label>
+
+        <label class="delivery-field delivery-wide">
+          <span>Full Address *</span>
+          <textarea
+            id="customer-address"
+            rows="3"
+            autocomplete="street-address"
+            required
+          ></textarea>
+        </label>
+
+        <label class="delivery-field">
+          <span>City *</span>
+          <input
+            type="text"
+            id="customer-city"
+            autocomplete="address-level2"
+            required
+          >
+        </label>
+
+        <label class="delivery-field">
+          <span>State *</span>
+          <input
+            type="text"
+            id="customer-state"
+            autocomplete="address-level1"
+            required
+          >
+        </label>
+
+        <label class="delivery-field">
+          <span>Pincode *</span>
+          <input
+            type="text"
+            id="customer-pincode"
+            inputmode="numeric"
+            autocomplete="postal-code"
+            maxlength="6"
+            required
+          >
+        </label>
+
+        <label class="delivery-field">
+          <span>Size *</span>
+          <select id="customer-size" required>
+            <option value="">Select size</option>
+            <option value="S">S</option>
+            <option value="M">M</option>
+            <option value="L">L</option>
+            <option value="XL">XL</option>
+            <option value="XXL">XXL</option>
+          </select>
+        </label>
+
+      </div>
+
+      <div class="delivery-summary">
+
+        <div>
+          <span>Product</span>
+          <strong id="delivery-product-name">
+            Lumbo Sacral Support Belt
+          </strong>
+        </div>
+
+        <div>
+          <span>Total</span>
+          <strong id="delivery-total">₹899</strong>
+        </div>
+
+      </div>
+
+      <button
+        type="submit"
+        class="btn btn-primary delivery-pay-btn"
+      >
+        Continue to Secure Payment →
+      </button>
+
+      <p class="delivery-security">
+        Secure payment powered by Razorpay
+      </p>
+
+    </form>
+
+  </div>
+</div>
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script src="./config.js"></script>
 <script src="./products.js"></script>
 <script src="./checkout.js"></script>
