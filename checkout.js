@@ -51,10 +51,19 @@ document.getElementById("delivery-form")?.addEventListener(
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({
-          productId: selectedCheckoutProduct.id,
-          size: customer.size
-        })
+    
+body: JSON.stringify({
+  productId: selectedCheckoutProduct.id,
+  size: customer.size,
+  name: customer.name,
+  phone: customer.phone,
+  email: customer.email,
+  address: customer.address,
+  city: customer.city,
+  state: customer.state,
+  pincode: customer.pincode
+})
+
       });
 
       const orderData = await orderResponse.json();
